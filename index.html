@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expenses</title>
+  </head>
+  <body>
+    <div class="contetnBlock">
+      <div class="header">Учет моих расходов</div>
+
+      <!-- текстовые заголовки -->
+      <div class="textHeader">
+        <div class="content-text">
+          <p>Куда было потрачено:</p>
+          <input type="text" class="expensesTextInput" id="add-task"/>
+        </div>
+
+        <div class="content-text">
+        <p>Сколько было потрачено:</p>
+          <div>
+            <input type="number"  class="expensesNumberInput" id="add-task-number"/>
+            <button onclick="onCklickButton()">Добавить</button>
+          </div>
+          <div class="total">
+            Итого: 
+            <div id="global"></div>
+          </div>
+        </div>
+      </div>
+      <div id ="content-page"></div>
+    </div>
+  </body>
+</html>
