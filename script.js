@@ -68,7 +68,7 @@ const render = () => {
     text.innerText = value.text;
     
     if (index === editTask) {                //все редактирование
-      chumba = allExpenses[index].text;
+      elInput = allExpenses[index].text;
       Price = allExpenses[index].Expenses;
 
       const newinputTask = document.createElement("input");
@@ -171,7 +171,7 @@ const delTask = async (index) => {
 };
 
 const taskTxt = (event) =>{
-  chumba = event.target.value;
+  elInput = event.target.value;
 }
 const newPrice = (event) =>{
   Price = event.target.value;
