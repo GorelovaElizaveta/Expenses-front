@@ -67,9 +67,9 @@ const render = () => {
     const text = document.createElement("p");
     text.innerText = value.text;
     
-    if (index === editTask) {
+    if (index === editTask) {                //все редактирование
       chumba = allExpenses[index].text;
-      chumba_cena = allExpenses[index].Expenses;
+      Price = allExpenses[index].Expenses;
 
       const newinputTask = document.createElement("input");
       const newNumberTask = document.createElement("input");
@@ -102,7 +102,7 @@ const render = () => {
       newDiv.appendChild(imgBack);
     } 
     else {
-      if (value === index) {
+      if (value === index) {         //dblck
         const newinputTask = document.createElement("input");
         newinputTask.type = "text";
         newinputTask.innerText = value.text;
@@ -174,7 +174,7 @@ const taskTxt = (event) =>{
   chumba = event.target.value;
 }
 const newPrice = (event) =>{
-  chumba_cena = event.target.value;
+  Price = event.target.value;
 }
 
 const backTask = () => {
@@ -189,25 +189,5 @@ const dblclickText = (index) => {
 };
 
 const doneTask = async (index) => {
-  let {_id} = allExpenses[index];
-      const resp = await fetch(
-        `http://localhost:8000/updateTask`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-            _id ,
-            text: chumba === allExpenses[index].text ? allExpenses[index].text : chumba,
-            Expenses: chumba_cena ===  allExpenses[index].Expenses ? allExpenses[index].Expenses : chumba_cena,
-          }),
-        }
-      );
-      const result = await resp.json();
-      allExpenses = result.data;
-      editTask = -1;
-      chumba = '';
-      render();
+
 };
