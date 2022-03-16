@@ -4,7 +4,7 @@ let inputValueNumber = "";
 let editTask = -1;
 let intermediaresult ="";
 let intermediaresultNumber ="";
-let now = new Date();
+let value = -1;
 
 window.onload = async () => {
   inputTask = document.getElementById("add-task");
@@ -19,16 +19,17 @@ window.onload = async () => {
   render();
 };
 
-const newDateFormat = (now) =>{
+const newDateFormat = () =>{
+  let now = new Date();
   let dd = now.getDate();
-  if(dd < 10) dd ="0" + dd;
   let mm = now.getMonth() + 1;
+  let yy = now.getFullYear();
+  if(dd < 10) dd ="0" + dd;
   if(mm < 10) mm ="0" + mm;
-  let yy = now.getFullYear() % 100;
   if(yy < 10) yy ="0" + yy;
   return dd + "." + mm + "." + yy
 }
-const formatData = newDateFormat(now);
+
 
 const updateValue = (event) => {
   inputValue = event.target.value;
@@ -45,30 +46,31 @@ const render = () => {
     global.removeChild(global.firstChild);
   }
   allExpenses.map((item) => (count += item.Expenses));
-
   const content = document.getElementById("content-page");
   const globalCount = document.createElement("p");
   globalCount.className ="count"
-  globalCount.innerText = count;
+  globalCount.innerText = count + " " + "руб.";
   global.appendChild(globalCount);
+  
   while (content.firstChild) {
     content.removeChild(content.firstChild);
   }
+
   allExpenses.map((value, index) => {
     const container = document.createElement("div");
-    const cena = document.createElement("div");
+    const Expens = document.createElement("div");
     const  newDate = document.createElement("div");
-    newDate.innerText = formatData;
-    cena.innerText = value.Expenses + " " + "руб.";
+    newDate.innerText = newDateFormat();
+    Expens.innerText = value.Expenses + " " + "руб.";
     const imgDelete = document.createElement("img");
     container.className = "div-container-text";
     const text = document.createElement("p");
     text.innerText = value.text;
-    container.appendChild(text);
-    container.appendChild(cena);
-    container.appendChild(newDate)
     
     if (index === editTask) {
+      chumba = allExpenses[index].text;
+      chumba_cena = allExpenses[index].Expenses;
+
       const newinputTask = document.createElement("input");
       const newNumberTask = document.createElement("input");
       newNumberTask.type ="Number";
@@ -81,10 +83,10 @@ const render = () => {
       intermediaresult = value.text;
       newNumberTask.className = "inputNumberChange";
       newinputTask.className = "inputChange";
-      newNumberTask.addEventListener("change", taskTxt);
+      newNumberTask.addEventListener("change", newPrice);
       newinputTask.addEventListener("change", taskTxt);
-      container.appendChild(newNumberTask);
       container.appendChild(newinputTask);
+      container.appendChild(newNumberTask);
       const newDiv = document.createElement("div");
       container.appendChild(newDiv);
       const imgDone = document.createElement("img");
@@ -100,22 +102,36 @@ const render = () => {
       newDiv.appendChild(imgBack);
     } 
     else {
-      const noEdit = document.createElement("div")
-      container.appendChild(noEdit);
-      imgDelete.src = "delete.png";
-      noEdit.appendChild(imgDelete);
-      imgDelete.onclick = () => {
-        delTask(index);
-      };
-      const imgEdit = document.createElement("img");
-      imgEdit.src = "edit.png";
-      imgEdit.onclick = () => {
-        editTask = index;
-        render();
-      };
-      noEdit.appendChild(imgEdit);
+      if (value === index) {
+        const newinputTask = document.createElement("input");
+        newinputTask.type = "text";
+        newinputTask.innerText = value.text;
+        newinputTask.className = "inputChange";
+        container.appendChild(newinputTask);
+
+      } else {
+        container.appendChild(text);
+        container.appendChild(Expens);
+        container.appendChild(newDate);
+        const noEdit = document.createElement("div");
+        container.appendChild(noEdit);
+        imgDelete.src = "delete.png";
+        noEdit.appendChild(imgDelete);
+        imgDelete.onclick = () => {
+          delTask(index);
+        };
+        text.addEventListener('dblclick', () => dblclickText(index));
+        const imgEdit = document.createElement("img");
+        imgEdit.src = "edit.png";
+        imgEdit.onclick = () => {
+          editTask = index;
+          render();
+        };
+        noEdit.appendChild(imgEdit);
+      }
     }
     content.appendChild(container);
+console.log(value);
   });
 };
 
@@ -154,15 +170,22 @@ const delTask = async (index) => {
   render();
 };
 
-const taskTxt = () =>{
-
+const taskTxt = (event) =>{
+  chumba = event.target.value;
+}
+const newPrice = (event) =>{
+  chumba_cena = event.target.value;
 }
 
 const backTask = () => {
     editTask = "-1";
     render();
-}
+};
+
+const dblclickText = (index) => {
+  ;
+};
 
 const doneTask = async (index) => {
 
-  };
+};
