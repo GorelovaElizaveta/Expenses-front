@@ -183,9 +183,31 @@ const backTask = () => {
 };
 
 const dblclickText = (index) => {
+  value = index;
+  render();
   ;
 };
 
 const doneTask = async (index) => {
-
+  let {_id} = allExpenses[index];
+      const resp = await fetch(
+        `http://localhost:8000/updateTask`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            _id ,
+            text: chumba === allExpenses[index].text ? allExpenses[index].text : chumba,
+            Expenses: chumba_cena ===  allExpenses[index].Expenses ? allExpenses[index].Expenses : chumba_cena,
+          }),
+        }
+      );
+      const result = await resp.json();
+      allExpenses = result.data;
+      editTask = -1;
+      chumba = '';
+      render();
 };
