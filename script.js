@@ -2,14 +2,15 @@ let allExpenses = [];
 let inputValue = "";
 let inputValueNumber = "";
 let editTask = -1;
-let intermediaresult ="";
-let intermediaresultNumber ="";
-let intermediaresultDate =""
+let intermediaresult = "";
+let intermediaresultNumber = "";
+let intermediaresultDate = "";
 let valueDblckTxt = -1;
 let valueDblckPrice = -1;
 let valueNewData = -1;
-let dd =""
+let mainDate = "";
 let flag = false;
+let newValueText = "";
 
 window.onload = async () => {
   inputTask = document.getElementById("add-task");
@@ -24,17 +25,16 @@ window.onload = async () => {
   render();
 };
 
-const newDateFormat = () =>{
+const newDateFormat = () => {
   let now = new Date();
   let dd = now.getDate();
   let mm = now.getMonth() + 1;
   let yy = now.getFullYear();
-  if(dd < 10) dd ="0" + dd;
-  if(mm < 10) mm ="0" + mm;
-  if(yy < 10) yy ="0" + yy;
-  return dd + "." + mm + "." + yy
-}
-
+  if (dd < 10) dd = "0" + dd;
+  if (mm < 10) mm = "0" + mm;
+  if (yy < 10) yy = "0" + yy;
+  return dd + "." + mm + "." + yy;
+};
 
 const updateValue = (event) => {
   inputValue = event.target.value;
@@ -45,7 +45,7 @@ const updateValueNumb = (event) => {
 };
 
 const render = () => {
-  let count = " ";
+  let count = 0;
   const global = document.getElementById("global");
   while (global.firstChild) {
     global.removeChild(global.firstChild);
@@ -53,10 +53,10 @@ const render = () => {
   allExpenses.map((item) => (count += item.Expenses));
   const content = document.getElementById("content-page");
   const globalCount = document.createElement("p");
-  globalCount.className ="count"
+  globalCount.className = "count";
   globalCount.innerText = count + " " + "руб.";
   global.appendChild(globalCount);
-  
+
   while (content.firstChild) {
     content.removeChild(content.firstChild);
   }
@@ -64,133 +64,149 @@ const render = () => {
   allExpenses.map((value, index) => {
     const container = document.createElement("div");
     const Expens = document.createElement("div");
-    Expens.className ="expenses-in-container"
-    const  newDateCont = document.createElement("div");
-    newDateCont.className ="date-in-container"
-    if(flag == true){
-    newDateCont.innerText = newDateFormat();
-      flag = false
+    Expens.className = "expenses-in-container";
+    const newDateCont = document.createElement("div");
+    newDateCont.className = "date-in-container";
+    if (flag == true) {
+      newDateCont.innerText = newDateFormat();
+      flag = false;
     } else {
-      let format = allExpenses[index].Date.split("-").reverse().join(".")
-      newDateCont.innerText = format
+      let format = allExpenses[index].Date.split("-").reverse().join(".");
+      newDateCont.innerText = format;
     }
-    dd =  newDateCont.innerText
-    // console.log(newDateCont.innerText)
+    mainDate = newDateCont.innerText;
     Expens.innerText = value.Expenses + " " + "руб.";
     const imgDelete = document.createElement("img");
     container.className = "div-container-text";
     const text = document.createElement("p");
-    text.className ="text-in-container"
+    text.className = "text-in-container";
     text.innerText = value.text;
-    
+
     if (index === editTask) {
+      valueNewData = -1;
+      valueDblckPrice = -1;
+      valueDblckTxt = -1;
       newValueText = allExpenses[index].text;
       newValue = allExpenses[index].Expenses;
-      ddddddDATA = dd;
-      console.log(dd)
+      dateСhange = mainDate;
 
-      const editDataTask =document.createElement("input");
+      const editDataTask = document.createElement("input");
       const newinputTask = document.createElement("input");
       const newNumberTask = document.createElement("input");
-      
-      editDataTask.type ="date"
-      editDataTask.min ="2022-01-01"
-      editDataTask.max ="2022-12-31"
-      newNumberTask.type ="Number";
+
+      editDataTask.type = "date";
+      editDataTask.min = "2022-01-01";
+      editDataTask.max = "2022-12-31";
+      newNumberTask.type = "Number";
       newinputTask.type = "text";
 
-      editDataTask.value = dd
+      editDataTask.value = mainDate;
       newNumberTask.value = value.Expenses;
       newinputTask.value = value.text;
 
-      editDataTask.innerText = dd
+      editDataTask.innerText = mainDate;
       newNumberTask.innerText = value.Expenses;
       newinputTask.innerText = value.text;
 
-      intermediaresultDate= dd;
+      intermediaresultDate = mainDate;
       intermediaresultNumber = value.Expenses;
       intermediaresult = value.text;
 
-      editDataTask.className = "inputDateChange"
+      editDataTask.className = "inputDateChange";
       newNumberTask.className = "inputNumberChange";
       newinputTask.className = "inputChange";
 
       newNumberTask.addEventListener("change", newPrice);
       newinputTask.addEventListener("change", taskTxt);
-      editDataTask.addEventListener("change", dateNew)
+      editDataTask.addEventListener("change", dateNew);
 
       container.appendChild(newinputTask);
       container.appendChild(editDataTask);
       container.appendChild(newNumberTask);
-      const newDiv = document.createElement("div");
-      container.appendChild(newDiv);
+      const divForIcon = document.createElement("div");
+      container.appendChild(divForIcon);
       const imgDone = document.createElement("img");
       const imgBack = document.createElement("img");
       imgDone.src = "done.png";
       imgBack.src = "back.png";
-      imgDone.onclick = () => {
-        doneTask(index);
-      };
-      
+      imgDone.onclick = () => doneTask(index);
       imgBack.onclick = () => backTask();
-      newDiv.appendChild(imgDone);
-      newDiv.appendChild(imgBack);
-    } 
-    else {
-      switch(index){
-      case  valueDblckTxt:
-        const newinputTask = document.createElement("input");
-        newinputTask.addEventListener("blur", onblurTxt)
-
-        newinputTask.type = "text";
-        newinputTask.innerText = value.text;
-        console.log(newinputTask.innerText )
-        newinputTask.className = "inputChange";
-        container.appendChild(newinputTask);
-        container.appendChild(newDateCont);
-        container.appendChild(Expens);
-        break;
+      divForIcon.appendChild(imgDone);
+      divForIcon.appendChild(imgBack);
+    } else {
+      switch (index) {
+        case valueDblckTxt:
+          let test = allExpenses[index].text;
+          const newinputTask = document.createElement("input");
+          newinputTask.addEventListener("blur", (e) =>
+            onblurTxt(e, index, test)
+          );
+          newinputTask.type = "text";
+          newinputTask.value = value.text;
+          newinputTask.className = "inputChange";
+          container.appendChild(newinputTask);
+          container.appendChild(newDateCont);
+          container.appendChild(Expens);
+          text.addEventListener("dblclick", () => dblcklText(index));
+          Expens.addEventListener("dblclick", () => dblcklExpens(index));
+          newDateCont.addEventListener("dblclick", () => dblcklnewDate(index));
+          break;
 
         case valueDblckPrice:
-        const newNumberTask = document.createElement("input");
-        newNumberTask.type = "Number";
-        newNumberTask.innerText = value.Expenses;
-        newNumberTask.className = "inputChangeExpenses";
-        container.appendChild(text);
-        container.appendChild(newDateCont);
-        container.appendChild(newNumberTask);
-        break;
+          let testEx = allExpenses[index].Expenses;
+          const newNumberTask = document.createElement("input");
+          newNumberTask.addEventListener("blur", (e) =>
+            onblurNumber(e, index, testEx)
+          );
+          newNumberTask.type = "Number";
+          newNumberTask.value = value.Expenses;
+          newNumberTask.className = "inputChangeExpenses";
+          container.appendChild(text);
+          container.appendChild(newDateCont);
+          container.appendChild(newNumberTask);
+          text.addEventListener("dblclick", () => dblcklText(index));
+          Expens.addEventListener("dblclick", () => dblcklExpens(index));
+          newDateCont.addEventListener("dblclick", () => dblcklnewDate(index));
+          break;
 
         case valueNewData:
-        const newDate = document.createElement("input");
-        newDate.type = "date";
-        container.appendChild(text);
-        container.appendChild(newDate);
-        container.appendChild(Expens);
-        break;
-      
-    
-      default:
-        container.appendChild(text);
-        container.appendChild(newDateCont);
-        container.appendChild(Expens);
-        const noEdit = document.createElement("div");
-        container.appendChild(noEdit);
-        imgDelete.src = "delete.png";
-        noEdit.appendChild(imgDelete);
-        imgDelete.onclick = () => {
-          delTask(index);
-        };
-        text.addEventListener('dblclick', () => dblcklText(index));
-        Expens.addEventListener('dblclick', () => dblcklExpens(index));
-        newDateCont.addEventListener('dblclick', () => dblcklnewDate(index));
-        const imgEdit = document.createElement("img");
-        imgEdit.src = "edit.png";
-        imgEdit.onclick = () => {
-          editTask = index;
-          render();
-        };
-        noEdit.appendChild(imgEdit);
+          let testDate = mainDate;
+          let formatTestDate = testDate.split(".").reverse().join("-");
+          const newDate = document.createElement("input");
+          newDate.value = formatTestDate;
+          newDate.addEventListener("blur", (e) =>
+            onblurDate(e, index, formatTestDate)
+          );
+          newDate.type = "date";
+          newDate.min = "2022-01-01";
+          newDate.max = "2022-12-31";
+          container.appendChild(text);
+          container.appendChild(newDate);
+          container.appendChild(Expens);
+          text.addEventListener("dblclick", () => dblcklText(index));
+          Expens.addEventListener("dblclick", () => dblcklExpens(index));
+          newDateCont.addEventListener("dblclick", () => dblcklnewDate(index));
+          break;
+
+        default:
+          container.appendChild(text);
+          container.appendChild(newDateCont);
+          container.appendChild(Expens);
+          const noEdit = document.createElement("div");
+          container.appendChild(noEdit);
+          imgDelete.src = "delete.png";
+          noEdit.appendChild(imgDelete);
+          imgDelete.onclick = () => delTask(index);
+          text.addEventListener("dblclick", () => dblcklText(index));
+          Expens.addEventListener("dblclick", () => dblcklExpens(index));
+          newDateCont.addEventListener("dblclick", () => dblcklnewDate(index));
+          const imgEdit = document.createElement("img");
+          imgEdit.src = "edit.png";
+          imgEdit.onclick = () => {
+            editTask = index;
+            render();
+          };
+          noEdit.appendChild(imgEdit);
       }
     }
     content.appendChild(container);
@@ -198,41 +214,44 @@ const render = () => {
 };
 
 const onCklickButton = async () => {
-  if(editTask >= 0){  
-    alert("Закончите редактировние")
-  }else{
-  let dt = newDateFormat()
-  console.log(dt)
-  if(inputValueNumber <= 0){
-    alert("Расходы должны быть больше 0 рублей.")
-  } else{
-  if (inputValue.trim() && inputValueNumber.trim()) {
-    const resp = await fetch("http://localhost:8000/createTask", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        text: inputValue,
-        Expenses: inputValueNumber,
-        Date: dt
-        
-      }),
-    });
-    flag = true;
-    const result = await resp.json();
-    allExpenses = result.data;
-    inputValue = " ";
-    inputTask.value = "";
-    inputValueNumber = "";
-    inputNumber.value = "";
-    render();
+  if (
+    editTask >= 0 ||
+    valueNewData > -1 ||
+    valueDblckPrice > -1 ||
+    valueDblckTxt > -1
+  ) {
+    alert("Закончите редактировние");
   } else {
-    alert("Поле не заполнено!");
+    let dt = newDateFormat();
+    if (inputValueNumber <= 0) {
+      alert("Расходы должны быть больше 0 рублей.");
+    } else {
+      if (inputValue.trim() && inputValueNumber.trim()) {
+        const resp = await fetch("http://localhost:8000/createTask", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            text: inputValue,
+            Expenses: inputValueNumber,
+            Date: dt,
+          }),
+        });
+        flag = true;
+        const result = await resp.json();
+        allExpenses = result.data;
+        inputValue = " ";
+        inputTask.value = "";
+        inputValueNumber = "";
+        inputNumber.value = "";
+        render();
+      } else {
+        alert("Поле не заполнено!");
+      }
+    }
   }
-};
-};
 };
 
 const delTask = async (index) => {
@@ -246,65 +265,157 @@ const delTask = async (index) => {
 };
 
 const taskTxt = (event) => {
-  newValueText = event.target.value;
-}
+  if (event.target.value.trim()) {
+    newValueText = event.target.value;
+  } else {
+    alert(
+      "Значение не может быть пустым. Все пустые значения будет возвращены к перваначальным."
+    );
+  }
+};
+
 const newPrice = (event) => {
-  newValue= event.target.value;
-}
+  if (event.target.value > 0) {
+    newValue = event.target.value;
+  } else {
+    alert(
+      "Некорректно заполнение полей. Значения будут возвращены к перваначальным."
+    );
+  }
+};
 
-const dateNew = (event) =>{
-  ddddddDATA = event.target.value;
-
-}
-
+const dateNew = (event) => {
+  dateСhange = event.target.value;
+};
 
 const backTask = () => {
-    editTask = "-1";
-    render();
+  editTask = "-1";
+  render();
 };
 
 const dblcklText = (index) => {
-  valueDblckTxt = index;
-  render();
+  if (editTask > -1) {
+    alert("Завершите редактирование задачи");
+  } else {
+    valueNewData = -1;
+    valueDblckPrice = -1;
+    valueDblckTxt = index;
+    render();
+  }
 };
 
 const dblcklExpens = (index) => {
-  valueDblckPrice = index;
-  render();
+  if (editTask > -1) {
+    alert("Завершите редактирование задачи");
+  } else {
+    valueNewData = -1;
+    valueDblckTxt = -1;
+    valueDblckPrice = index;
+    render();
+  }
 };
 
-const dblcklnewDate = (index) =>{
-  valueNewData = index;
-  render();
-}
-
+const dblcklnewDate = (index) => {
+  if (editTask > -1) {
+    alert("Завершите редактирование задачи");
+  } else {
+    valueDblckPrice = -1;
+    valueDblckTxt = -1;
+    valueNewData = index;
+    render();
+  }
+};
 
 const doneTask = async (index) => {
-    let {_id} = allExpenses[index];
-      const resp = await fetch(
-        `http://localhost:8000/updateTask`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-            _id ,
-            text: newValueText === allExpenses[index].text ? allExpenses[index].text : newValueText,
-            Expenses: newValue ===  allExpenses[index].Expenses ? allExpenses[index].Expenses : newValue,
-            Date: ddddddDATA === dd ? dd: ddddddDATA
-          }),
-          
-        }
-      );
-      const result = await resp.json();
-      allExpenses = result.data;
-      editTask = -1;
-      dd=""
-      ddddddDATA =""
-      newValueText = '';
-      newValue =";"
-      render();
+  newValueText === allExpenses[index].text? allExpenses[index].text: newValueText
+  newValue === allExpenses[index].Expenses ? allExpenses[index].Expenses: newValue,
+  dateСhange === mainDate ? mainDate : dateСhange
+  let { _id } = allExpenses[index];
+  const resp = await fetch(`http://localhost:8000/updateTask`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      _id,
+      text: newValueText ,
+      Expenses: newValue,
+      Date: dateСhange ,
+    }),
+  });
+  const result = await resp.json();
+  allExpenses = result.data;
+  editTask = -1;
+  mainDate = "";
+  dateСhange = "";
+  newValueText = "";
+  newValue = ";";
+  render();
 };
 
+const onblurTxt = async (event, index, test) => {
+  if (event.target.value.trim()) {
+    let { _id } = allExpenses[index];
+    const resp = await fetch(`http://localhost:8000/updateTask`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        _id,
+        text: event.target.value,
+      }),
+    });
+    const result = await resp.json();
+    allExpenses = result.data;
+    valueDblckTxt = -1;
+    render();
+  }
+};
+
+const onblurNumber = async (event, index, testEx) => {
+  if (event.target.value.trim() && event.target.value > 0) {
+    let { _id } = allExpenses[index];
+    const resp = await fetch(`http://localhost:8000/updateTask`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        _id,
+        Expenses: event.target.value,
+      }),
+    });
+    const result = await resp.json();
+    allExpenses = result.data;
+    valueDblckPrice = -1;
+    render();
+  }
+};
+
+const onblurDate = async (event, index, formatTestDate) => {
+  if (event.target.value.trim()) {
+    let { _id } = allExpenses[index];
+    const resp = await fetch(`http://localhost:8000/updateTask`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        _id,
+        Date:
+          event.target.value === formatTestDate
+            ? formatTestDate
+            : event.target.value,
+      }),
+    });
+    const result = await resp.json();
+    allExpenses = result.data;
+    valueNewData = -1;
+    render();
+  }
+};

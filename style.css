@@ -77,6 +77,19 @@ img {
   word-wrap: break-word;
 }
 
+#content-page {
+  width: 70vw;
+  height: 300px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 @media (min-width: 260px) and (max-width: 771px) {
   .textHeader {
     width: 81%;
