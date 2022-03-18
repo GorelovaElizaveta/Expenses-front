@@ -85,7 +85,6 @@ const render = () => {
     text.innerText = value.text;
 
     if (index === editTask) {
-      console.log("132");
       valueNewData = -1;
       valueDblckPrice = -1;
       valueDblckTxt = -1;
