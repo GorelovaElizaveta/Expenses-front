@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="script.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,22 +16,27 @@
       <div class="textHeader">
         <div class="content-text">
           <p>Куда было потрачено:</p>
-          <input type="text" class="expensesTextInput" id="add-task"/>
+          <input type="text" class="expensesTextInput" id="add-task" />
         </div>
 
         <div class="content-text">
-        <p>Сколько было потрачено:</p>
-          <div>
-            <input type="number"  class="expensesNumberInput" id="add-task-number"/>
+          <p>Сколько было потрачено:</p>
+          <div class="colum">
+            <input
+              type="number"
+              class="expensesNumberInput"
+              id="add-task-number"
+              min="1"
+            />
             <button onclick="onCklickButton()">Добавить</button>
           </div>
           <div class="total">
-            Итого: 
+            Итого:
             <div id="global"></div>
           </div>
         </div>
       </div>
-      <div id ="content-page"></div>
+      <div id="content-page"></div>
     </div>
   </body>
 </html>
