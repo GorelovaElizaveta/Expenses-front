@@ -222,7 +222,7 @@ const onCklickButton = async () => {
   ) {
     alert("Закончите редактировние");
   } else {
-    let dt = newDateFormat();
+    let valueDataFormat = newDateFormat();
     if (inputValueNumber <= 0) {
       alert("Расходы должны быть больше 0 рублей.");
     } else {
@@ -236,7 +236,7 @@ const onCklickButton = async () => {
           body: JSON.stringify({
             text: inputValue,
             Expenses: inputValueNumber,
-            Date: dt,
+            Date: valueDataFormat,
           }),
         });
         flag = true;
