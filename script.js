@@ -92,46 +92,36 @@ const render = () => {
       newValueText = allExpenses[index].text;
       newValue = allExpenses[index].Expenses;
       dateСhange = mainDate;
-
+      const forEdit =  document.createElement("div")
       const editDataTask = document.createElement("input");
       const newinputTask = document.createElement("input");
       const newNumberTask = document.createElement("input");
-
       editDataTask.type = "date";
       editDataTask.min = "2022-01-01";
       editDataTask.max = "2022-12-31";
       newNumberTask.type = "Number";
       newinputTask.type = "text";
-      let testDate = mainDate;
-      console.log(testDate);
-      let formatTestDate = testDate.split(".").reverse().join("-");
-      console.log(mainDate);
-      // editDataTask.value = mainDate;
-      console.log("2022-03-18");
-      editDataTask.value = formatTestDate;
 
+      let testDate = mainDate;
+      let formatTestDate = testDate.split(".").reverse().join("-");
+      editDataTask.value = formatTestDate;
       newNumberTask.value = value.Expenses;
       newinputTask.value = value.text;
-
-      // editDataTask.innerText = mainDate;
       newNumberTask.innerText = value.Expenses;
       newinputTask.innerText = value.text;
-
       intermediaresultDate = mainDate;
       intermediaresultNumber = value.Expenses;
       intermediaresult = value.text;
-
       editDataTask.className = "inputDateChange";
       newNumberTask.className = "inputNumberChange";
       newinputTask.className = "inputChange";
-
       newNumberTask.addEventListener("change", newPrice);
       newinputTask.addEventListener("change", taskTxt);
       editDataTask.addEventListener("change", dateNew);
-
-      container.appendChild(newinputTask);
-      container.appendChild(editDataTask);
-      container.appendChild(newNumberTask);
+      container.appendChild(forEdit);
+      forEdit.appendChild(newinputTask);
+      forEdit.appendChild(editDataTask);
+      forEdit.appendChild(newNumberTask);
       const divForIcon = document.createElement("div");
       container.appendChild(divForIcon);
       const imgDone = document.createElement("img");
