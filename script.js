@@ -33,7 +33,7 @@ const newDateFormat = () => {
   if (dd < 10) dd = "0" + dd;
   if (mm < 10) mm = "0" + mm;
   if (yy < 10) yy = "0" + yy;
-  return dd + "." + mm + "." + yy;
+  return mm + "." + dd + "." + yy;
 };
 
 const updateValue = (event) => {
@@ -71,8 +71,10 @@ const render = () => {
       newDateCont.innerText = newDateFormat();
       flag = false;
     } else {
-      let format = allExpenses[index].Date.split("-").reverse().join(".");
-      newDateCont.innerText = format;
+      allExpenses[index].Date = allExpenses[index].Date.split("-")
+        .reverse()
+        .join(".");
+      newDateCont.innerText = allExpenses[index].Date;
     }
     mainDate = newDateCont.innerText;
     Expens.innerText = value.Expenses + " " + "руб.";
@@ -83,6 +85,7 @@ const render = () => {
     text.innerText = value.text;
 
     if (index === editTask) {
+      console.log("132");
       valueNewData = -1;
       valueDblckPrice = -1;
       valueDblckTxt = -1;
@@ -99,12 +102,18 @@ const render = () => {
       editDataTask.max = "2022-12-31";
       newNumberTask.type = "Number";
       newinputTask.type = "text";
+      let testDate = mainDate;
+      console.log(testDate);
+      let formatTestDate = testDate.split(".").reverse().join("-");
+      console.log(mainDate);
+      // editDataTask.value = mainDate;
+      console.log("2022-03-18");
+      editDataTask.value = formatTestDate;
 
-      editDataTask.value = mainDate;
       newNumberTask.value = value.Expenses;
       newinputTask.value = value.text;
 
-      editDataTask.innerText = mainDate;
+      // editDataTask.innerText = mainDate;
       newNumberTask.innerText = value.Expenses;
       newinputTask.innerText = value.text;
 
@@ -327,9 +336,13 @@ const dblcklnewDate = (index) => {
 };
 
 const doneTask = async (index) => {
-  newValueText === allExpenses[index].text? allExpenses[index].text: newValueText
-  newValue === allExpenses[index].Expenses ? allExpenses[index].Expenses: newValue,
-  dateСhange === mainDate ? mainDate : dateСhange
+  newValueText === allExpenses[index].text
+    ? allExpenses[index].text
+    : newValueText;
+  newValue === allExpenses[index].Expenses
+    ? allExpenses[index].Expenses
+    : newValue,
+    dateСhange === mainDate ? mainDate : dateСhange;
   let { _id } = allExpenses[index];
   const resp = await fetch(`http://localhost:8000/updateTask`, {
     method: "PATCH",
@@ -339,9 +352,9 @@ const doneTask = async (index) => {
     },
     body: JSON.stringify({
       _id,
-      text: newValueText ,
+      text: newValueText,
       Expenses: newValue,
-      Date: dateСhange ,
+      Date: dateСhange,
     }),
   });
   const result = await resp.json();
