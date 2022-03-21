@@ -423,4 +423,4 @@ const onblurDate = async (event, index, formatTestDate) => {
     valueNewData = -1;
     render();
   }
-};
+}

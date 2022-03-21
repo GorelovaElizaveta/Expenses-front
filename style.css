@@ -1,4 +1,3 @@
-
 body {
   background-color: rgb(233 239 250);
 }
@@ -99,21 +98,28 @@ img {
   width: 50vw;
 }
 
-.inputDateChange, .inputNumberChange {
+.inputDateChange{
   margin-left: 30px;
 }
 
-@media (min-width: 260px) and (max-width: 771px) {
-  .date-in-container{
+.inputNumberChange {
+  margin-left: 30px;
+}
+
+@media (min-width: 260px) and (max-width: 771px) { 
+  .date-in-container {
     font-size: 13px;
   }
+
   .textHeader {
     width: 81%;
   }
+
   #content-page {
     width: 80%;
-  overflow: scroll;
+    overflow: scroll;
   }
+
   .div-container-text {
     width: 100%;
   }
@@ -122,14 +128,23 @@ img {
     width: 100px;
     font-size: 13px;
   }
+
   .expenses-in-container {
     width: 120px;
     font-size: 13px;
   }
 }
 
-@media (min-width: 260px) and (max-width: 1231px){
-  .inputChange, .inputDateChange, .inputNumberChange {
+@media (min-width: 260px) and (max-width: 1231px) {
+  .inputChange {
+    margin-left: 13px;
+  }
+
+  .inputDateChange{
+    margin-left: 13px;
+  }
+
+  .inputNumberChange {
     margin-left: 13px;
   }
 }
@@ -139,26 +154,37 @@ img {
     flex-direction: column;
     align-items: center;
   }
-  .expensesNumberInput,
+
+  .expensesNumberInput{
+    width: 50vw;
+  }
+
   .expensesTextInput {
     width: 50vw;
   }
+
   .colum {
     display: flex;
     flex-direction: column;
   }
+
   .text-in-container {
     width: 100px;
     font-size: 13px;
   }
+
   .expenses-in-container {
     width: 120px;
     font-size: 13px;
   }
+
   .date-in-container {
     font-size: 13px;
   }
-.inputChange, .inputDateChange, .inputNumberChange {
+
+  .inputChange,
+  .inputDateChange,
+  .inputNumberChange {
     margin-left: 0;
   }
 }
@@ -167,6 +193,7 @@ img {
   .text-in-container {
     width: 80px;
   }
+  
   .expenses-in-container {
     width: 80px;
   }
