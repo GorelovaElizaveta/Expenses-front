@@ -33,7 +33,7 @@ const newDateFormat = () => {
   if (dd < 10) dd = "0" + dd;
   if (mm < 10) mm = "0" + mm;
   if (yy < 10) yy = "0" + yy;
-  return mm + "." + dd + "." + yy;
+  return dd + "." + mm + "." + yy;
 };
 
 const updateValue = (event) => {
@@ -71,10 +71,8 @@ const render = () => {
       newDateCont.innerText = newDateFormat();
       flag = false;
     } else {
-      allExpenses[index].Date = allExpenses[index].Date.split("-")
-        .reverse()
-        .join(".");
-      newDateCont.innerText = allExpenses[index].Date;
+      let format = allExpenses[index].Date.split("-").reverse().join(".");
+      newDateCont.innerText = format;
     }
     mainDate = newDateCont.innerText;
     Expens.innerText = value.Expenses + " " + "руб.";
@@ -91,29 +89,36 @@ const render = () => {
       newValueText = allExpenses[index].text;
       newValue = allExpenses[index].Expenses;
       dateСhange = mainDate;
-      const forEdit =  document.createElement("div")
+      const forEdit = document.createElement("div");
+
       const editDataTask = document.createElement("input");
       const newinputTask = document.createElement("input");
       const newNumberTask = document.createElement("input");
+
       editDataTask.type = "date";
       editDataTask.min = "2022-01-01";
       editDataTask.max = "2022-12-31";
       newNumberTask.type = "Number";
       newinputTask.type = "text";
+      let arrTemp = value.Date.split('.');
+      let corDate = arrTemp[2] + '-' + arrTemp[1]+ '-' + arrTemp[0]
 
-      let testDate = mainDate;
-      let formatTestDate = testDate.split(".").reverse().join("-");
-      editDataTask.value = formatTestDate;
+      editDataTask.value = corDate;
       newNumberTask.value = value.Expenses;
       newinputTask.value = value.text;
+
+      editDataTask.innerText = mainDate;
       newNumberTask.innerText = value.Expenses;
       newinputTask.innerText = value.text;
+
       intermediaresultDate = mainDate;
       intermediaresultNumber = value.Expenses;
       intermediaresult = value.text;
+
       editDataTask.className = "inputDateChange";
       newNumberTask.className = "inputNumberChange";
       newinputTask.className = "inputChange";
+
       newNumberTask.addEventListener("change", newPrice);
       newinputTask.addEventListener("change", taskTxt);
       editDataTask.addEventListener("change", dateNew);
@@ -136,6 +141,7 @@ const render = () => {
         case valueDblckTxt:
           let test = allExpenses[index].text;
           const newinputTask = document.createElement("input");
+          newinputTask.focus()
           newinputTask.addEventListener("blur", (e) =>
             onblurTxt(e, index, test)
           );
@@ -153,6 +159,7 @@ const render = () => {
         case valueDblckPrice:
           let testEx = allExpenses[index].Expenses;
           const newNumberTask = document.createElement("input");
+          newNumberTask.focus()
           newNumberTask.addEventListener("blur", (e) =>
             onblurNumber(e, index, testEx)
           );
@@ -171,6 +178,7 @@ const render = () => {
           let testDate = mainDate;
           let formatTestDate = testDate.split(".").reverse().join("-");
           const newDate = document.createElement("input");
+          newDate.focus()
           newDate.value = formatTestDate;
           newDate.addEventListener("blur", (e) =>
             onblurDate(e, index, formatTestDate)
@@ -325,13 +333,9 @@ const dblcklnewDate = (index) => {
 };
 
 const doneTask = async (index) => {
-  newValueText === allExpenses[index].text
-    ? allExpenses[index].text
-    : newValueText;
-  newValue === allExpenses[index].Expenses
-    ? allExpenses[index].Expenses
-    : newValue,
-    dateСhange === mainDate ? mainDate : dateСhange;
+  newValueText === allExpenses[index].text? allExpenses[index].text: newValueText
+  newValue === allExpenses[index].Expenses ? allExpenses[index].Expenses: newValue
+  dateСhange === mainDate ? mainDate : dateСhange
   let { _id } = allExpenses[index];
   const resp = await fetch(`http://localhost:8000/updateTask`, {
     method: "PATCH",
@@ -341,9 +345,9 @@ const doneTask = async (index) => {
     },
     body: JSON.stringify({
       _id,
-      text: newValueText,
+      text: newValueText ,
       Expenses: newValue,
-      Date: dateСhange,
+      Date: dateСhange.split("-").reverse().join(".") ,
     }),
   });
   const result = await resp.json();
@@ -411,8 +415,8 @@ const onblurDate = async (event, index, formatTestDate) => {
         _id,
         Date:
           event.target.value === formatTestDate
-            ? formatTestDate
-            : event.target.value,
+            ? formatTestDate.split("-").reverse().join(".")
+            : event.target.value.split("-").reverse().join("."),
       }),
     });
     const result = await resp.json();

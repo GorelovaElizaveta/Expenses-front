@@ -58,7 +58,6 @@ button:hover {
   display: flex;
   align-items: center;
   width: 50vw;
-  height: 20px;
 }
 
 img {
@@ -80,7 +79,7 @@ img {
 
 #content-page {
   width: 70vw;
-  height: 300px;
+  height: 600px;
   overflow: scroll;
   display: flex;
   flex-direction: column;
@@ -91,12 +90,29 @@ img {
   display: none;
 }
 
+.forEdit {
+  padding: 10px;
+  margin-top: 20px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 50vw;
+}
+
+.inputDateChange, .inputNumberChange {
+  margin-left: 30px;
+}
+
 @media (min-width: 260px) and (max-width: 771px) {
+  .date-in-container{
+    font-size: 13px;
+  }
   .textHeader {
     width: 81%;
   }
   #content-page {
     width: 80%;
+  overflow: scroll;
   }
   .div-container-text {
     width: 100%;
@@ -110,6 +126,13 @@ img {
     width: 120px;
     font-size: 13px;
   }
+}
+
+@media (min-width: 260px) and (max-width: 1231px){
+  .inputChange, .inputDateChange, .inputNumberChange {
+    margin-left: 13px;
+  }
+
 }
 
 @media (min-width: 260px) and (max-width: 500px) {
@@ -136,6 +159,9 @@ img {
   .date-in-container {
     font-size: 13px;
   }
+.inputChange, .inputDateChange, .inputNumberChange {
+    margin-left: 0;
+  }
 }
 
 @media (min-width: 260px) and (max-width: 480px) {
@@ -145,17 +171,18 @@ img {
   .expenses-in-container {
     width: 80px;
   }
+
 }
 
 @media (min-width: 260px) and (max-width: 370px) {
   .text-in-container {
-    width: 70px;
-    font-size: 10px;
+    width: 50px;
+    font-size: 13px;
   }
 
   .expenses-in-container {
-    width: 72px;
-    font-size: 10px;
+    width: 40px;
+    font-size: 13px;
   }
 
   .count {
@@ -163,11 +190,11 @@ img {
   }
 
   .date-in-container {
-    font-size: 10px;
+    font-size: 13px;
   }
 
   img {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
   }
 }
