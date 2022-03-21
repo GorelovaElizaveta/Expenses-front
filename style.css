@@ -132,7 +132,6 @@ img {
   .inputChange, .inputDateChange, .inputNumberChange {
     margin-left: 13px;
   }
-
 }
 
 @media (min-width: 260px) and (max-width: 500px) {
@@ -171,7 +170,6 @@ img {
   .expenses-in-container {
     width: 80px;
   }
-
 }
 
 @media (min-width: 260px) and (max-width: 370px) {

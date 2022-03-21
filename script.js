@@ -404,6 +404,8 @@ const onblurNumber = async (event, index, testEx) => {
 
 const onblurDate = async (event, index, formatTestDate) => {
   if (event.target.value.trim()) {
+    let dateEvent =  event.target.value === formatTestDate? formatTestDate.split("-").reverse().join(".")
+    : event.target.value.split("-").reverse().join("."),
     let { _id } = allExpenses[index];
     const resp = await fetch(`http://localhost:8000/updateTask`, {
       method: "PATCH",
@@ -413,10 +415,7 @@ const onblurDate = async (event, index, formatTestDate) => {
       },
       body: JSON.stringify({
         _id,
-        Date:
-          event.target.value === formatTestDate
-            ? formatTestDate.split("-").reverse().join(".")
-            : event.target.value.split("-").reverse().join("."),
+        Date: dateEvent
       }),
     });
     const result = await resp.json();
